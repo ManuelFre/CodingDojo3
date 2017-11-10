@@ -1,12 +1,210 @@
-﻿<Window x:Class="CodingDojo3.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodingDojo3"
+        xmlns:ViewModel="clr-namespace:CodingDojo3.ViewModel" x:Class="CodingDojo3.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="MainWindow" Height="480.3" Width="525"
+        Background="Black">
+
+    <Window.DataContext>
+        <ViewModel:MainViewModel/>
+    </Window.DataContext>
+
+    <Grid VerticalAlignment="Stretch" Margin="0,0,0,0">
+        <!--<StackPanel  Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Vertical"/>-->
+        <!--<StackPanel HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="100">-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="120"/>
+        </Grid.ColumnDefinitions>
+        <Grid HorizontalAlignment="stretch" VerticalAlignment="Stretch" ShowGridLines="false" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height ="40"/>
+                <RowDefinition Height ="*"/>
+            </Grid.RowDefinitions>
+
+            <Border BorderThickness="2" BorderBrush="Red" VerticalAlignment="Top" DockPanel.Dock="top" Margin="20,5,20,5" Grid.Row="0">
+                <WrapPanel  HorizontalAlignment="Center" >
+                    <Image x:Name="Warning" Source="Images\Warning-WF.png"  HorizontalAlignment="center" VerticalAlignment="center" Height="20" Width="20"/>
+                    <Label Content="Überlauf Grauwasser" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                </WrapPanel>
+            </Border>
+            <StackPanel Grid.Row="1">
+                <Label Content="Aktoren" VerticalAlignment="Center" Margin="10,0,0,0" HorizontalAlignment="Left" FontSize="10" Foreground="White"/>
+
+                <DataGrid Margin="10" MinHeight="100" ItemsSource="{Binding ActorList}" AutoGenerateColumns="True"/>
+                <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Right">
+                    <Button Content="Hinzufügen" Margin="10,10,5,5" Height="20" FontSize="10" Background="#FF020202" BorderBrush="#FFF9F9F9" Foreground="White" Command="{Binding ActuatorAddBtnClickCmd}"/>
+                    <Button Content="Löschen" Margin="10,10,5,5" Height="20" FontSize="10" Background="#FF020202" BorderBrush="#FFF9F9F9" Foreground="White" Command="{Binding ActuatorDelBtnClickCmd}"/>
+                </StackPanel>
+                <Label Content="Sensoren" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10" Foreground="White"/>
+
+                <DataGrid Margin="10" MinHeight="100" ItemsSource="{Binding SensorList}" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
+                        <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
+                        <DataGridTextColumn Binding="{Binding Description}" Header="Description"/>
+                        <DataGridTextColumn Binding="{Binding Room}" Header="Room"/>
+                        <DataGridTemplateColumn   Header="Mode" Width="90">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Mode}" Height="25"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellEditingTemplate>
+                                <DataTemplate>
+                                    <ComboBox SelectedItem="{Binding Mode, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataContext.ModeSelectionList, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" Height="25"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellEditingTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Binding="{Binding ValueType}" Header="ValueType"/>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Ellipse Height="15" Width="15" Fill="{Binding Mode, Converter={StaticResource con}}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Binding="{Binding Value}" Header="Value"/>
+
+                        <DataGridTextColumn Binding="{Binding PosX}" Header="PosX"/>
+                        <DataGridTextColumn Binding="{Binding PosY}" Header="PosY"/>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+                <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Right">
+                    <Button Content="Hinzufügen" Margin="10,10,5,5" Height="20" FontSize="10" Background="#FF020202" BorderBrush="#FFF9F9F9" Foreground="White" Command="{Binding SensorAddBtnClickCmd}"/>
+                    <Button Content="Löschen" Margin="10,10,5,5" Height="20" FontSize="10" Background="#FF020202" BorderBrush="#FFF9F9F9" Foreground="White" Command="{Binding SensorDelBtnCmd}"/>
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+        <Grid HorizontalAlignment="Right" VerticalAlignment="Stretch" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" MaxHeight="25"/>
+                <RowDefinition Height="*" MaxHeight="25"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+                <Image x:Name="TemperatureImage" Source="Images\Rain-WF.png" Grid.Column="0" Height="25" Width="25" HorizontalAlignment="center" VerticalAlignment="center"/>
+                <Label x:Name="TemperatureText" Grid.Column="1" Content="25 °" Foreground="White" HorizontalAlignment="left"  VerticalAlignment="Center"/>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+                <Image x:Name="WindImage" Source="Images\Wind.png" Grid.Column="0" Height="25" Width="25" HorizontalAlignment="center" VerticalAlignment="center"/>
+                <Label x:Name="WindText" Grid.Column="1" Content="5 km/h" Foreground="White" HorizontalAlignment="left"  VerticalAlignment="Center"/>
+            </Grid>
+            <Border Grid.Row="1"  BorderThickness="0,0,0,2" BorderBrush="White"/>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+                <Image x:Name="PVImage" Source="Images\Solar.png" Grid.Column="0" Height="25" Width="25" HorizontalAlignment="center" VerticalAlignment="center"/>
+                <Label x:Name="PVText" Grid.Column="1" Content="200 W" Foreground="White" HorizontalAlignment="left"  VerticalAlignment="Center"/>
+            </Grid>
+
+            <Grid Grid.Row="3">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+                <Image x:Name="PeopleImage" Source="Images\Man-01.png" Grid.Column="0" Height="25" Width="25" HorizontalAlignment="center" VerticalAlignment="center"/>
+                <Label x:Name="PeopleText" Grid.Column="1" Content="0" Foreground="White" HorizontalAlignment="left"  VerticalAlignment="Center"/>
+
+            </Grid>
+
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+                <Image x:Name="LockImage" Source="Images\Lock-WF.png" Grid.Column="0" Height="25" Width="25" HorizontalAlignment="center" VerticalAlignment="center"/>
+                <Label x:Name="LockText" Grid.Column="1" Content="OK" Foreground="White" HorizontalAlignment="left"  VerticalAlignment="Center"/>
+            </Grid>
+            <Border Grid.Row="4"  BorderThickness="0,0,0,2" BorderBrush="White"/>
+            <Grid Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+                <Image x:Name="MailImage" Source="Images\Message Mail-WF.png" Grid.Column="0" Height="25" Width="25" HorizontalAlignment="center" VerticalAlignment="center"/>
+                <Label x:Name="MailText" Grid.Column="1" Content="10" Foreground="White" HorizontalAlignment="left"  VerticalAlignment="Center"/>
+            </Grid>
+            <Grid Grid.Row="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+                <Image x:Name="TasksImage" Source="Images\Tasks.png" Grid.Column="0" Height="25" Width="25" HorizontalAlignment="center" VerticalAlignment="center"/>
+                <Label x:Name="TasksText" Grid.Column="1" Content="0" Foreground="White" HorizontalAlignment="left"  VerticalAlignment="Center"/>
+            </Grid>
+            <Border Grid.Row="6"  BorderThickness="0,0,0,2" BorderBrush="White"/>
+            <Grid Grid.Row="7" VerticalAlignment="Stretch">
+
+                <!--</StackPanel>-->
+                <!--<StackPanel HorizontalAlignment="Stretch" Margin="2,2,2,2" VerticalAlignment="Stretch">-->
+                <Button x:Name="Overview" Content="Übersicht" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5" Background="Black" Foreground="White"/>
+
+            </Grid>
+            <Grid Grid.Row="8" VerticalAlignment="Stretch">
+                <Button x:Name="Rooms" Content="Räume" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5" Background="Black" Foreground="White"/>
+            </Grid>
+            <Grid Grid.Row="9" VerticalAlignment="Stretch">
+                <Button x:Name="Tools" Content="Geräte" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5" Background="Black" Foreground="White"/>
+            </Grid>
+            <Grid Grid.Row="10" VerticalAlignment="Stretch">
+                <Button x:Name="Buildings" Content="Gebäude" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5" Background="Black" Foreground="White"/>
+            </Grid>
+            <Grid Grid.Row="11" VerticalAlignment="Stretch">
+                <Button x:Name="Safety" Content="Sicherheit" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5" Background="Black" Foreground="White"/>
+            </Grid>
+            <Grid Grid.Row="12" VerticalAlignment="Stretch">
+                <Button x:Name="Multimedia" Content="Multimedia" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5" Background="Black" Foreground="White" />
+            </Grid>
+
+            <Border Grid.Row="12"  BorderThickness="0,0,0,2" BorderBrush="White"/>
+
+            <Grid Grid.Row="13">
+                <StackPanel HorizontalAlignment="Stretch" Margin="2,2,2,2" VerticalAlignment="Stretch" Orientation="Horizontal" Height="30">
+                    <Image x:Name="Bell" Source="Images\Bell New-WF.png"  HorizontalAlignment="center" VerticalAlignment="center"/>
+                    <Image x:Name="SpeakerDecrease" Source="Images\Speaker Decrease - 01.png"  HorizontalAlignment="center" VerticalAlignment="center"/>
+                    <Label x:Name="SpeakerValue" Content="4" Foreground="White" HorizontalAlignment="center"  VerticalAlignment="Center"/>
+                    <Image x:Name="SpeakerIncrease" Source="Images\Speaker Increase - 02.png"  HorizontalAlignment="center" VerticalAlignment="center"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="14">
+                <Label x:Name="Time"  Foreground="White" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Content="{Binding MyDate}"/>
+            </Grid>
+            <Border BorderThickness="2,0,0,0" BorderBrush="White" Grid.ColumnSpan="15" Grid.RowSpan="15"/>
+        </Grid>
+
+        <!--</StackPanel>-->
     </Grid>
 </Window>
