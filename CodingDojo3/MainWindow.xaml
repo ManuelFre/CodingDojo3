@@ -9,6 +9,7 @@
         Title="MainWindow" Height="480.3" Width="525"
         Background="Black">
 
+    
     <Window.DataContext>
         <ViewModel:MainViewModel/>
     </Window.DataContext>
@@ -62,11 +63,11 @@
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Binding="{Binding ValueType}" Header="ValueType"/>
                         <DataGridTemplateColumn>
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Ellipse Height="15" Width="15" Fill="{Binding Mode, Converter={StaticResource con}}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
+                            <!--<DataGridTemplateColumn.CellTemplate>-->
+                                <!--<DataTemplate>
+                                    <Ellipse Height="15" Width="15" Fill="{Binding Mode, Converter={StaticResource con}}"/>-->
+                                <!--</DataTemplate>-->
+                            <!--</DataGridTemplateColumn.CellTemplate>-->
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Binding="{Binding Value}" Header="Value"/>
 
