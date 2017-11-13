@@ -87,6 +87,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\StringToBrushConverter.cs" />
     <Compile Include="DataSimulation\Simulator.cs" />
     <Compile Include="ViewModel\Items.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

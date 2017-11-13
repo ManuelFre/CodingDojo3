@@ -1,5 +1,6 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using Shared.BaseModels;
 using Shared.Interfaces;
 using Simulation;
 using System;
@@ -40,13 +41,24 @@ namespace CodingDojo3.ViewModel
             set { myDate = value; RaisePropertyChanged("MyDate"); }                     //View ist über MyDate mit dem ModelView "verbunden"; Mithilfe des raiseproperty bekommt die View eine Änderung mitgeteilt.
         }
 
-        private Simulator sim;
+        //private Simulator sim;
         DispatcherTimer dt = new System.Windows.Threading.DispatcherTimer();            //Erstellt einen Timer für die Uhrzeit
         public MainViewModel()
         {
             SensorList = new ObservableCollection<Items>();
             ActorList = new ObservableCollection<Items>();
             ModeSelectionList = new ObservableCollection<string>();
+
+            //Laden der Dropdownelemente für die Oberfläche
+            foreach (string item in Enum.GetNames(typeof(SensorModeType)))              //Enum.Getnames erstellt ein Array aus Strings, welches die Namen der Properties enthält
+            {
+                ModeSelectionList.Add(item);
+            }
+            foreach (string item in Enum.GetNames(typeof(Shared.BaseModels.ModeType)))  //Enum.Getnames erstellt ein Array aus Strings, welches die Namen der Properties enthält
+            {
+                ModeSelectionList.Add(item);
+            }
+            RaisePropertyChanged();
 
             dt.Tick += Dt_Tick;                                                         //Dt_Tick entspricht einem Event, welches unten erstellt wurde; Dieses Event wird bei jedem Tick ausgelöst
             dt.Interval = new TimeSpan(0, 0, 1);                                        //TimeSpan erstellt einen Zeitabstand, welcher als Tick-Auslöser übernommen wird
@@ -57,12 +69,12 @@ namespace CodingDojo3.ViewModel
         private void LoadData()
         {
             Simulator sim = new Simulator(modelItems);
-            foreach (var item in sim.It)
+            foreach (Items itm in sim.It)
             {
-                if (item.ItemType.Equals(typeof(ISensor)))
-                    SensorList.Add(item);
-                else if (item.ItemType.Equals(typeof(IActuator)))
-                    ActorList.Add(item);
+                if (itm.ItemType.Equals(typeof(ISensor)))
+                    SensorList.Add(itm);
+                else if (itm.ItemType.Equals(typeof(IActuator)))
+                    ActorList.Add(itm);
             }
 
         }

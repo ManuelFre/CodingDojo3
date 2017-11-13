@@ -4,11 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodingDojo3"
-        xmlns:ViewModel="clr-namespace:CodingDojo3.ViewModel" x:Class="CodingDojo3.MainWindow"
+        xmlns:ViewModel="clr-namespace:CodingDojo3.ViewModel"
+    xmlns:converters="clr-namespace:CodingDojo3.Converter" x:Class="CodingDojo3.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="480.3" Width="525"
         Background="Black">
 
+    <Window.Resources>
+        <converters:StringToBrushConverter x:Key="con"/>
+    </Window.Resources>
     
     <Window.DataContext>
         <ViewModel:MainViewModel/>
@@ -63,11 +67,11 @@
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Binding="{Binding ValueType}" Header="ValueType"/>
                         <DataGridTemplateColumn>
-                            <!--<DataGridTemplateColumn.CellTemplate>-->
-                                <!--<DataTemplate>
-                                    <Ellipse Height="15" Width="15" Fill="{Binding Mode, Converter={StaticResource con}}"/>-->
-                                <!--</DataTemplate>-->
-                            <!--</DataGridTemplateColumn.CellTemplate>-->
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Ellipse Height="15" Width="15" Fill="{Binding Mode, Converter={StaticResource con}}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Binding="{Binding Value}" Header="Value"/>
 

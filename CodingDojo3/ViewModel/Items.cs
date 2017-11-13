@@ -91,6 +91,7 @@ namespace CodingDojo3.ViewModel
         {
             get
             {
+                //if (baseItem is ISensor) return (baseItem as BaseSensor).SensorMode.ToString();
                 if (baseItem is BaseSensor)                        //Sensor aus der Shared.dll -> überprüft, ob mein Item ein SensorItem ist; Im Original wird auf IBaseSensor überprüft -> warum?
                     return (baseItem as BaseSensor).SensorMode.ToString();      //zuerst Typkonvertierung as BaseSensor, danach kann auf die Property des Sensors (sensormode) zugegriffen werden - davor ist basemode ja nur ein ItemBase
                 else if (baseItem is IActuator)                 //IActuator aus der Shared.dll -> überprüft, ob mein Item ein ActuatorItem ist
@@ -101,10 +102,20 @@ namespace CodingDojo3.ViewModel
             set
             {
                 if (baseItem is ISensor)
-                    (baseItem as BaseSensor).SensorMode = (SensorModeType)Enum.Parse(typeof(SensorModeType), value, false);
+                    if (value.Equals(SensorModeType.Enabled.ToString()))
+                    {
+                        (baseItem as BaseSensor).SensorMode = SensorModeType.Enabled; //(SensorModeType).Parse(typeof(SensorModeType), value, false);
+                    }
+                    else if (value.Equals(SensorModeType.Disabled.ToString()))
+                    {
+                        (baseItem as BaseSensor).SensorMode = SensorModeType.Disabled;
+                    }
+                    
                 if (baseItem is IActuator)
+                {
                     (baseItem as BaseActuator).ActuatorMode = (ModeType)Enum.Parse(typeof(ModeType), value, false);
-
+                }
+                    
                 RaisePropertyChanged();
             }
         }
